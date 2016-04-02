@@ -15,11 +15,13 @@ Window {
 
         RadarLine {
             id: radarLine
-            x: 100
-            y: 100
+            x: 10
+            y: 10
             width: 200
             height: 200
             color: "blue"
+            beginVertex: Qt.point(0, 0)
+            endVertex: Qt.point(200, 200)
         }
     }
 }
