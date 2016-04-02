@@ -8,7 +8,7 @@
 RadarLine::RadarLine(QQuickItem *parent)
     : QQuickItem(parent)
 {
-    m_vertexCnt = 2;
+    m_vertexCnt = 4;
     setFlag(ItemHasContents, true);
 }
 
@@ -21,24 +21,6 @@ void RadarLine::setColor(const QColor &color)
     emit colorChanged(m_color);
 }
 
-void RadarLine::setBeginVertex(const QPoint &beginVertex)
-{
-    if (beginVertex == m_beginVertex) return ;
-
-    m_beginVertex = beginVertex;
-    update();
-    emit beginVertexChanged(m_beginVertex);
-}
-
-void RadarLine::setEndVertex(const QPoint &endVertex)
-{
-    if (endVertex == m_endVertex) return ;
-
-    m_endVertex = endVertex;
-    update();
-    emit beginVertexChanged(m_endVertex);
-}
-
 QSGNode *RadarLine::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
 {
     QSGGeometryNode *node = Q_NULLPTR;
@@ -48,7 +30,7 @@ QSGNode *RadarLine::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
         node = new QSGGeometryNode;
         geometry = new QSGGeometry(QSGGeometry::defaultAttributes_Point2D(), m_vertexCnt);
         geometry->setLineWidth(2);
-        geometry->setDrawingMode(GL_LINES);
+        geometry->setDrawingMode(GL_LINE_LOOP);
         node->setGeometry(geometry);
         node->setFlag(QSGNode::OwnsGeometry);
 
@@ -65,8 +47,10 @@ QSGNode *RadarLine::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
 
     QSGGeometry::Point2D *vertices = geometry->vertexDataAsPoint2D();
 
-    vertices[0].set(m_beginVertex.x(), m_beginVertex.y());
-    vertices[1].set(m_endVertex.x(), m_endVertex.y());
+    vertices[0].set(this->x(), this->y());
+    vertices[1].set(this->x(), this->y()+this->height());
+    vertices[2].set(this->x()+this->width(), this->y()+this->height());
+    vertices[3].set(this->x()+this->width(), this->y());
 
     node->markDirty(QSGNode::DirtyGeometry);
 

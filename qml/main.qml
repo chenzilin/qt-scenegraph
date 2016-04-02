@@ -20,8 +20,6 @@ Window {
             width: 200
             height: 200
             color: "blue"
-            beginVertex: Qt.point(0, 0)
-            endVertex: Qt.point(200, 200)
         }
     }
 }
