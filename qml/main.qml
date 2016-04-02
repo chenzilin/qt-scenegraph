@@ -29,6 +29,13 @@ Window {
             width: 200
             height: 200
             color: "blue"
+            translate: 6.2831852
+
+            SequentialAnimation {
+                    running: true
+                    NumberAnimation { target: radarLine; property: "translate"; from: 2*3.1415926; to: 0; duration: 5000 }
+                    loops: Animation.Infinite
+                }
         }
     }
 }

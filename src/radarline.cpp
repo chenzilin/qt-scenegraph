@@ -4,6 +4,8 @@
 
 #include <radarline.h>
 
+#define Pi 3.1415926
+
 
 RadarLine::RadarLine(QQuickItem *parent)
     : QQuickItem(parent)
@@ -19,6 +21,15 @@ void RadarLine::setColor(const QColor &color)
     m_color = color;
     update();
     emit colorChanged(m_color);
+}
+
+void RadarLine::setTranslate(const qreal &translate)
+{
+    if (translate == m_translate) return ;
+
+    m_translate = translate;
+    update();
+    emit colorChanged(m_translate);
 }
 
 QSGNode *RadarLine::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
@@ -49,7 +60,7 @@ QSGNode *RadarLine::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
 
     for (int i = 0; i < m_vertexCnt; ++i) {
         int x = i*this->width()/100;
-        vertices[i].set(x, this->height()-this->height()*(1+sin(2*3.1415926*x/this->width()))/2);
+        vertices[i].set(x, this->height()-this->height()*(1+sin(m_translate + 2*Pi*x/this->width()))/2);
     }
 
     node->markDirty(QSGNode::DirtyGeometry);
