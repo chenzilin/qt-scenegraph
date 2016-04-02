@@ -13,6 +13,15 @@ Window {
         color: "black"
 
 
+        Rectangle {
+            id: radarLineBack
+            x: 10
+            y: 10
+            width: 200
+            height: 200
+            color: "green"
+        }
+
         RadarLine {
             id: radarLine
             x: 10
