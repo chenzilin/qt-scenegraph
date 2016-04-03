@@ -1,6 +1,7 @@
 #include <QSGNode>
 #include <QQuickWindow>
-#include <QSGSimpleRectNode>
+#include <QSGGeometryNode>
+#include <QSGTextureMaterial>
 
 #include <radarline.h>
 
@@ -10,26 +11,20 @@
 RadarLine::RadarLine(QQuickItem *parent)
     : QQuickItem(parent)
 {
-    m_vertexCnt = 100;
+    m_vertexCnt = 4;
     setFlag(ItemHasContents, true);
 }
 
-void RadarLine::setColor(const QColor &color)
+void RadarLine::setSrc(const QString &src)
 {
-    if (color == m_color) return ;
+    QString tmpStr = src;
+    tmpStr.remove(0, 3);
 
-    m_color = color;
+    if (tmpStr == m_src) return ;
+
+    m_src = tmpStr;
     update();
-    emit colorChanged(m_color);
-}
-
-void RadarLine::setTranslate(const qreal &translate)
-{
-    if (translate == m_translate) return ;
-
-    m_translate = translate;
-    update();
-    emit colorChanged(m_translate);
+    emit srcChanged(m_src);
 }
 
 QSGNode *RadarLine::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
@@ -39,14 +34,17 @@ QSGNode *RadarLine::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
 
     if (!oldNode) {
         node = new QSGGeometryNode;
-        geometry = new QSGGeometry(QSGGeometry::defaultAttributes_Point2D(), m_vertexCnt);
-        geometry->setLineWidth(2);
-        geometry->setDrawingMode(GL_LINE_STRIP);
+        geometry = new QSGGeometry(QSGGeometry::defaultAttributes_TexturedPoint2D(), m_vertexCnt);
+        geometry->setDrawingMode(GL_TRIANGLE_STRIP);
         node->setGeometry(geometry);
         node->setFlag(QSGNode::OwnsGeometry);
 
-        QSGFlatColorMaterial *material = new QSGFlatColorMaterial;
-        material->setColor(m_color);
+        QSGTextureMaterial *material = new QSGTextureMaterial;
+        QSGTexture *texture = window()->createTextureFromImage(QImage(m_src));
+        texture->setFiltering(QSGTexture::None);
+        texture->setHorizontalWrapMode(QSGTexture::ClampToEdge);
+        texture->setVerticalWrapMode(QSGTexture::ClampToEdge);
+        material->setTexture(texture);
         node->setMaterial(material);
         node->setFlag(QSGNode::OwnsMaterial);
     }
@@ -56,12 +54,12 @@ QSGNode *RadarLine::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
         geometry->allocate(m_vertexCnt);
     }
 
-    QSGGeometry::Point2D *vertices = geometry->vertexDataAsPoint2D();
-
-    for (int i = 0; i < m_vertexCnt; ++i) {
-        int x = i*this->width()/100;
-        vertices[i].set(x, this->height()-this->height()*(1+sin(m_translate + 2*Pi*x/this->width()))/2);
-    }
+    QRectF bounds = boundingRect();
+    QSGGeometry::TexturedPoint2D* vertices = geometry->vertexDataAsTexturedPoint2D();
+    vertices[0].set(bounds.x(), bounds.y() + bounds.height(), 0.0f, 1.0f);
+    vertices[1].set(bounds.x() + bounds.width(), bounds.y() + bounds.height(), 1.0f, 1.0f);
+    vertices[2].set(bounds.x(), bounds.y(), 0.0f, 0.0f);
+    vertices[3].set(bounds.x() + bounds.width(), bounds.y(), 1.0f, 0.0f);
 
     node->markDirty(QSGNode::DirtyGeometry);
 

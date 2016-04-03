@@ -13,29 +13,23 @@ Window {
         color: "black"
 
 
-        Rectangle {
-            id: radarLineBack
-            x: 10
-            y: 10
-            width: 200
-            height: 200
-            color: "green"
-        }
-
         RadarLine {
             id: radarLine
-            x: 10
-            y: 10
+            x: 100
+            y: 100
             width: 200
             height: 200
-            color: "blue"
-            translate: 6.2831852
+            src: "qrc:/images/texture.png"
+        }
 
-            SequentialAnimation {
-                    running: true
-                    NumberAnimation { target: radarLine; property: "translate"; from: 2*3.1415926; to: 0; duration: 5000 }
-                    loops: Animation.Infinite
-                }
+
+        Image {
+            id: im
+            x: 250
+            y: 250
+            width: 200
+            height: 200
+            source: "qrc:/images/texture.png"
         }
     }
 }

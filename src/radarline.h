@@ -7,28 +7,19 @@ class RadarLine : public QQuickItem
 {
     Q_OBJECT
 
-    Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
-
-    Q_PROPERTY(qreal translate READ translate WRITE setTranslate NOTIFY translateChanged)
+    Q_PROPERTY(QString src READ src WRITE setSrc NOTIFY srcChanged)
 
 public:
     explicit RadarLine(QQuickItem *parent = 0);
     QSGNode *updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *);
 
-    void setColor(const QColor &color);
-    QColor color() const { return m_color; }
-
-    void setTranslate(const qreal &translate);
-    qreal translate() const { return m_translate; }
+    void setSrc(const QString &src);
+    QString src() const { return m_src; }
 
 signals:
-    void colorChanged(QColor);
-    void translateChanged(qreal);
+    void srcChanged(QString);
 
 private:
-
+    QString m_src;
     int m_vertexCnt;
-    QColor m_color;
-
-    qreal m_translate;
 };
