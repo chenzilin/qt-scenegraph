@@ -8,7 +8,7 @@
 RadarLine::RadarLine(QQuickItem *parent)
     : QQuickItem(parent)
 {
-    m_vertexCnt = 4;
+    m_vertexCnt = 3;
     setFlag(ItemHasContents, true);
 }
 
@@ -30,7 +30,7 @@ QSGNode *RadarLine::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
         node = new QSGGeometryNode;
         geometry = new QSGGeometry(QSGGeometry::defaultAttributes_Point2D(), m_vertexCnt);
         geometry->setLineWidth(2);
-        geometry->setDrawingMode(GL_LINE_LOOP);
+        geometry->setDrawingMode(GL_TRIANGLE_STRIP);
         node->setGeometry(geometry);
         node->setFlag(QSGNode::OwnsGeometry);
 
@@ -45,12 +45,15 @@ QSGNode *RadarLine::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
         geometry->allocate(m_vertexCnt);
     }
 
+    const QRectF rect = boundingRect();
     QSGGeometry::Point2D *vertices = geometry->vertexDataAsPoint2D();
 
-    vertices[0].set(this->x(), this->y());
-    vertices[1].set(this->x(), this->y()+this->height());
-    vertices[2].set(this->x()+this->width(), this->y()+this->height());
-    vertices[3].set(this->x()+this->width(), this->y());
+    vertices[0].x = rect.left();
+    vertices[0].y = rect.bottom();
+    vertices[1].x = rect.left() + rect.width()/2;
+    vertices[1].y = rect.top();
+    vertices[2].x = rect.right();
+    vertices[2].y = rect.bottom();
 
     node->markDirty(QSGNode::DirtyGeometry);
 
