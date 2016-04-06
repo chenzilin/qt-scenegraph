@@ -20,5 +20,7 @@ signals:
     void colorChanged(QColor);
 
 private:
+
+    int m_rectCnt;
     QColor m_color;
 };

@@ -17,8 +17,8 @@ Window {
             id: radarLine
             x: 100
             y: 100
-            width: 200
-            height: 200
+            width: 300
+            height: 300
             color: "blue"
         }
     }
