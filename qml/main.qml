@@ -15,8 +15,8 @@ Window {
 
         RadarLine {
             id: radarLine
-            x: 100
-            y: 100
+            x: 30
+            y: 30
             width: 200
             height: 200
             src: "qrc:/images/texture.png"

@@ -11,7 +11,8 @@
 RadarLine::RadarLine(QQuickItem *parent)
     : QQuickItem(parent)
 {
-    m_vertexCnt = 4;
+    //m_vertexCnt = 4;
+    m_vertexCnt = 6;
     setFlag(ItemHasContents, true);
 }
 
@@ -35,6 +36,7 @@ QSGNode *RadarLine::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
     if (!oldNode) {
         node = new QSGGeometryNode;
         geometry = new QSGGeometry(QSGGeometry::defaultAttributes_TexturedPoint2D(), m_vertexCnt);
+        //geometry->setDrawingMode(GL_TRIANGLE_STRIP);
         geometry->setDrawingMode(GL_TRIANGLE_STRIP);
         node->setGeometry(geometry);
         node->setFlag(QSGNode::OwnsGeometry);
@@ -56,10 +58,23 @@ QSGNode *RadarLine::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
 
     QRectF bounds = boundingRect();
     QSGGeometry::TexturedPoint2D* vertices = geometry->vertexDataAsTexturedPoint2D();
-    vertices[0].set(bounds.x(), bounds.y() + bounds.height(), 0.0f, 0.5f);
-    vertices[1].set(bounds.x() + bounds.width(), bounds.y() + bounds.height(), 0.5f, 1.0f);
-    vertices[2].set(bounds.x(), bounds.y(), 0.5f, 0.0f);
-    vertices[3].set(bounds.x() + bounds.width(), bounds.y(), 1.0f, 0.5f);
+
+    vertices[0].set(bounds.x(), bounds.y(), 0.0f, 0.0f);
+    vertices[1].set(bounds.x(), bounds.y() + bounds.height(), 0.0f, 1.0f);
+    vertices[2].set(bounds.x() + bounds.width()/2, bounds.y(), 0.5f, 0.0f);
+    vertices[3].set(bounds.x() + bounds.width()/2, bounds.y(), 0.5f, 0.0f);
+    vertices[4].set(bounds.x() + bounds.width(), bounds.y() + bounds.height(), 1.0f, 1.0f);
+    vertices[5].set(bounds.x() + bounds.width(), bounds.y(), 1.0f, 0.0f);
+
+//    vertices[0].set(bounds.x(), bounds.y() + bounds.height(), 0.0f, 0.5f);
+//    vertices[1].set(bounds.x() + bounds.width(), bounds.y() + bounds.height(), 0.5f, 1.0f);
+//    vertices[2].set(bounds.x(), bounds.y(), 0.5f, 0.0f);
+//    vertices[3].set(bounds.x() + bounds.width(), bounds.y(), 1.0f, 0.5f);
+
+//    vertices[0].set(bounds.x(), bounds.y() + bounds.height(), 0.3f, 0.7f);
+//    vertices[1].set(bounds.x() + bounds.width(), bounds.y() + bounds.height(), 0.7f, 0.7f);
+//    vertices[2].set(bounds.x(), bounds.y(), 0.3f, 0.3f);
+//    vertices[3].set(bounds.x() + bounds.width(), bounds.y(), 0.7f, 0.3f);
 
 //    vertices[0].set(bounds.x(), bounds.y() + bounds.height(), 0.0f, 1.0f);
 //    vertices[1].set(bounds.x() + bounds.width(), bounds.y() + bounds.height(), 1.0f, 1.0f);
