@@ -19,16 +19,33 @@ Window {
             y: 100
             width: 200
             height: 200
-            src: "qrc:/images/texture.png"
+
+            property int index: 0
+
+            sources: ["qrc:/images/red0.png",
+                "qrc:/images/red1.png",
+                "qrc:/images/red2.png",
+                "qrc:/images/red3.png",
+                "qrc:/images/red4.png",
+                "qrc:/images/red5.png",
+                "qrc:/images/red6.png",
+                "qrc:/images/red7.png",
+                "qrc:/images/red8.png",
+                "qrc:/images/red9.png",
+            ]
+            source: sources[index]
         }
 
-        Image {
-            id: im
-            x: 250
-            y: 250
-            width: 200
-            height: 200
-            source: "qrc:/images/texture.png"
+        Timer {
+            interval: 500
+            running: true
+            repeat: true
+            onTriggered: {
+                ++radarLine.index;
+                radarLine.index = radarLine.index % 10;
+                console.log("Index: ", radarLine.index);
+            }
         }
+
     }
 }

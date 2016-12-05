@@ -11,16 +11,28 @@ RadarLine::RadarLine(QQuickItem *parent)
     setFlag(ItemHasContents, true);
 }
 
-void RadarLine::setSrc(const QString &src)
+void RadarLine::setSource(const QString &source)
 {
-    QString tmpStr = src;
-    tmpStr.remove(0, 3);
 
-    if (tmpStr == m_src) return ;
+    if (source != m_source) {
+        m_source = source;
+        update();
+        emit sourceChanged(m_source);
+    }
+}
 
-    m_src = tmpStr;
+void RadarLine::setSources(const QList<QString> &sources) {
+
+    m_sources.clear();
+    m_sourceImages.clear();
+
+    for (const auto &source: sources) {
+        m_sources.push_back(source.mid(3));
+        m_sourceImages.insert(source.mid(3), QImage(source.mid(3)));
+    }
+
     update();
-    emit srcChanged(m_src);
+    emit sourcesChanged(m_sources);
 }
 
 QSGNode *RadarLine::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
@@ -28,12 +40,14 @@ QSGNode *RadarLine::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
     QSGSimpleTextureNode *node = static_cast<QSGSimpleTextureNode *>(oldNode);
     if (!node) {
         node = new QSGSimpleTextureNode();
-        node->setTexture(window()->createTextureFromImage(QImage(m_src)));
+        node->setTexture(window()->createTextureFromImage(m_sourceImages[m_source]));
         node->setOwnsTexture(true);
         node->setFiltering(QSGTexture::Linear);
     }
+    else {
+        node->setTexture(window()->createTextureFromImage(m_sourceImages[m_source]));
+    }
 
     node->setRect(boundingRect());
-
     return node;
 }

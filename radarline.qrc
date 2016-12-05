@@ -1,6 +1,15 @@
 <RCC>
     <qresource prefix="/">
         <file>qml/main.qml</file>
-        <file>images/texture.png</file>
+        <file>images/red0.png</file>
+        <file>images/red1.png</file>
+        <file>images/red2.png</file>
+        <file>images/red3.png</file>
+        <file>images/red4.png</file>
+        <file>images/red5.png</file>
+        <file>images/red6.png</file>
+        <file>images/red7.png</file>
+        <file>images/red8.png</file>
+        <file>images/red9.png</file>
     </qresource>
 </RCC>
