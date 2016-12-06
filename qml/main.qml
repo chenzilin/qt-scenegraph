@@ -20,8 +20,6 @@ Window {
             width: 200
             height: 200
 
-            property int index: 0
-
             sources: ["qrc:/images/red0.png",
                 "qrc:/images/red1.png",
                 "qrc:/images/red2.png",
@@ -33,7 +31,7 @@ Window {
                 "qrc:/images/red8.png",
                 "qrc:/images/red9.png",
             ]
-            source: sources[index]
+            index: 0
         }
 
         Timer {

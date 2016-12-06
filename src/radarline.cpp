@@ -1,5 +1,6 @@
 #include <QSGNode>
 #include <QQuickWindow>
+#include <QtConcurrent>
 #include <QSGSimpleTextureNode>
 
 #include <radarline.h>
@@ -11,13 +12,12 @@ RadarLine::RadarLine(QQuickItem *parent)
     setFlag(ItemHasContents, true);
 }
 
-void RadarLine::setSource(const QString &source)
+void RadarLine::setIndex(const uint &index)
 {
-
-    if (source != m_source) {
-        m_source = source;
+    if (index != m_index) {
+        m_index = index;
         update();
-        emit sourceChanged(m_source);
+        emit indexChanged(m_index);
     }
 }
 
@@ -26,10 +26,22 @@ void RadarLine::setSources(const QList<QString> &sources) {
     m_sources.clear();
     m_sourceImages.clear();
 
-    for (const auto &source: sources) {
-        m_sources.push_back(source.mid(3));
-        m_sourceImages.insert(source.mid(3), QImage(source.mid(3)));
+    int sourcesSize = sources.size();
+    for (uint index = 0; index < (uint)sourcesSize; ++index) {
+        m_sources.push_back(sources[index].mid(3));
+        m_sourceImages.insert(index, QImage(sources[index].mid(3)));
     }
+
+    auto createImages = [this](const QList<QString> &sources) {
+        int sourcesSize = sources.size();
+        for (uint index = 0; index < (uint)sourcesSize; ++index) {
+            this->m_sources.push_back(sources[index].mid(3));
+            this->m_sourceImages.insert(index, QImage(sources[index].mid(3)));
+        }
+
+    };
+
+    QtConcurrent::run(createImages, sources);
 
     update();
     emit sourcesChanged(m_sources);
@@ -37,15 +49,18 @@ void RadarLine::setSources(const QList<QString> &sources) {
 
 QSGNode *RadarLine::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
 {
+    if (m_sourceImages.isEmpty() || m_index >= (uint)m_sourceImages.size())
+        return nullptr;
+
     QSGSimpleTextureNode *node = static_cast<QSGSimpleTextureNode *>(oldNode);
     if (!node) {
         node = new QSGSimpleTextureNode();
-        node->setTexture(window()->createTextureFromImage(m_sourceImages[m_source]));
+        node->setTexture(window()->createTextureFromImage(m_sourceImages[m_index]));
         node->setOwnsTexture(true);
         node->setFiltering(QSGTexture::Linear);
     }
     else {
-        node->setTexture(window()->createTextureFromImage(m_sourceImages[m_source]));
+        node->setTexture(window()->createTextureFromImage(m_sourceImages[m_index]));
     }
 
     node->setRect(boundingRect());

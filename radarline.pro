@@ -1,5 +1,5 @@
 # QT Modules
-QT += qml quick
+QT += qml quick concurrent
 
 # Target
 TARGET = radarline

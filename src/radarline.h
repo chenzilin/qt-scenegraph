@@ -9,26 +9,26 @@ class RadarLine : public QQuickItem
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString source READ source WRITE setSource NOTIFY sourceChanged)
+    Q_PROPERTY(uint index READ index WRITE setIndex NOTIFY indexChanged)
     Q_PROPERTY(QList<QString> sources READ sources WRITE setSources NOTIFY sourcesChanged)
 
 public:
     explicit RadarLine(QQuickItem *parent = 0);
     QSGNode *updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *);
 
-    void setSource(const QString &source);
-    QString source() const { return m_source; }
+    void setIndex(const uint &index);
+    uint index() const { return m_index; }
 
     QList<QString> sources() const { return m_sources; }
     void setSources(const QList<QString> &sources);
 
 signals:
-    void sourceChanged(QString);
+    void indexChanged(uint);
     void sourcesChanged(QList<QString>);
 
 private:
-    QString m_source;
+    uint m_index = 0;
 
     QList<QString> m_sources;
-    QHash<QString, QImage> m_sourceImages;
+    QHash<uint, QImage> m_sourceImages;
 };
