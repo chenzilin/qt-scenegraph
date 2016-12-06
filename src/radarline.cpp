@@ -26,12 +26,6 @@ void RadarLine::setSources(const QList<QString> &sources) {
     m_sources.clear();
     m_sourceImages.clear();
 
-    int sourcesSize = sources.size();
-    for (uint index = 0; index < (uint)sourcesSize; ++index) {
-        m_sources.push_back(sources[index].mid(3));
-        m_sourceImages.insert(index, QImage(sources[index].mid(3)));
-    }
-
     auto createImages = [this](const QList<QString> &sources) {
         int sourcesSize = sources.size();
         for (uint index = 0; index < (uint)sourcesSize; ++index) {
