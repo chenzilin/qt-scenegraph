@@ -2,7 +2,7 @@
 QT += qml quick
 
 # Target
-TARGET = radarline
+TARGET = scenegraph
 TEMPLATE = app
 
 # Extra Configs
@@ -24,7 +24,7 @@ SOURCES += \
 OTHER_FILES += qml/main.qml
 
 # Resources
-RESOURCES += radarline.qrc
+RESOURCES += scenegraph.qrc
 QMAKE_RESOURCE_FLAGS += -no-compress
 
 # Objects Pathes
