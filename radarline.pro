@@ -14,11 +14,13 @@ CONFIG(release, debug|release) {
 # Source Files
 INCLUDEPATH += src
 HEADERS += \
-    src/radarline.h
+    src/radarline.h \
+    src/trapezium.h
 
 SOURCES += \
     src/main.cpp \
-    src/radarline.cpp
+    src/radarline.cpp \
+    src/trapezium.cpp
 
 # Qml Files
 OTHER_FILES += qml/main.qml

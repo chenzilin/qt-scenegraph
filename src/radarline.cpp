@@ -31,6 +31,10 @@ void RadarLine::setSrc(const QString &src)
 QSGNode *RadarLine::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
 {
     QSGGeometryNode *node = Q_NULLPTR;
+
+
+
+
     QSGGeometry *geometry = Q_NULLPTR;
 
     if (!oldNode) {
@@ -66,20 +70,7 @@ QSGNode *RadarLine::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
     vertices[4].set(bounds.x() + bounds.width(), bounds.y() + bounds.height(), 1.0f, 1.0f);
     vertices[5].set(bounds.x() + bounds.width(), bounds.y(), 1.0f, 0.0f);
 
-//    vertices[0].set(bounds.x(), bounds.y() + bounds.height(), 0.0f, 0.5f);
-//    vertices[1].set(bounds.x() + bounds.width(), bounds.y() + bounds.height(), 0.5f, 1.0f);
-//    vertices[2].set(bounds.x(), bounds.y(), 0.5f, 0.0f);
-//    vertices[3].set(bounds.x() + bounds.width(), bounds.y(), 1.0f, 0.5f);
 
-//    vertices[0].set(bounds.x(), bounds.y() + bounds.height(), 0.3f, 0.7f);
-//    vertices[1].set(bounds.x() + bounds.width(), bounds.y() + bounds.height(), 0.7f, 0.7f);
-//    vertices[2].set(bounds.x(), bounds.y(), 0.3f, 0.3f);
-//    vertices[3].set(bounds.x() + bounds.width(), bounds.y(), 0.7f, 0.3f);
-
-//    vertices[0].set(bounds.x(), bounds.y() + bounds.height(), 0.0f, 1.0f);
-//    vertices[1].set(bounds.x() + bounds.width(), bounds.y() + bounds.height(), 1.0f, 1.0f);
-//    vertices[2].set(bounds.x(), bounds.y(), 0.0f, 0.0f);
-//    vertices[3].set(bounds.x() + bounds.width(), bounds.y(), 1.0f, 0.0f);
 
     node->markDirty(QSGNode::DirtyGeometry);
 
