@@ -1,7 +1,7 @@
-#ifndef TRAPEZIUM_H
-#define TRAPEZIUM_H
+#pragma once
 
 #include <QQuickItem>
+#include <QSGGeometry>
 
 class Trapezium : public QQuickItem
 {
@@ -30,6 +30,9 @@ public:
     void setSrc (const QString &src);
     void setDirection (const Direction &direction);
 
+    void dealWith (Direction direction, QSGGeometry::TexturedPoint2D*);
+
+
 signals:
 
     void partNumChanged (int);
@@ -47,5 +50,3 @@ private:
     qreal m_rateWholeHeight;
     qreal m_rateWholeWidth;
 };
-
-#endif // TRAPEZIUM_H

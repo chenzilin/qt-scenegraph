@@ -12,6 +12,27 @@ Window {
         anchors.fill: parent
         color: "black"
 
+        Trapezium {
+            id: trapezium
+            x: 80
+            y: 80
+            width: 300
+            height: 300
+            scale: 1.0
+            rate: 1.0
+            direction: Trapezium.Top
+            partNum: 1000
+            src: "qrc:/images/texture.png"
+
+            SequentialAnimation on rate {
+                NumberAnimation { to: 0.0; duration: 1000 }
+                NumberAnimation { to: 1.0; duration: 1000 }
+                loops: Animation.Infinite
+            }
+        }
+
+
+
 //        PathView {
 //            id: pathView
 //            anchors.fill: parent
@@ -61,7 +82,7 @@ Window {
 //                    height:100
 //                    src: icon
 //                    rate:0.6
-//                    direction:typeof PathView.rotateY<=0?"left":"right"
+//                    direction: PathView.rotateY <=0 ? Trapezium.Left : Trapezium.Right
 //                }
 //            }
 //        }
@@ -72,24 +93,5 @@ Window {
 //            ListElement { name: "RGear"; icon: "qrc:/images/texture.png" }
 //            ListElement { name: "NGear"; icon: "qrc:/images/texture.png" }
 //        }
-
-        Trapezium {
-            id: trapezium
-            x: 80
-            y: 80
-            width: 300
-            height: 300
-            scale: 1.0
-            rate: 1.0
-            direction: Trapezium.Right
-            partNum: 1000
-            src: "qrc:/images/texture.png"
-
-            SequentialAnimation on rate {
-                NumberAnimation { to: 0.0; duration: 1000 }
-                NumberAnimation { to: 1.0; duration: 1000 }
-                loops: Animation.Infinite
-            }
-        }
     }
 }
