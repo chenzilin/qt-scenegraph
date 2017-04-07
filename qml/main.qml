@@ -13,22 +13,24 @@ Window {
         color: "black"
 
 
+        Image {
+            id: im
+            x: 100
+            y: 100
+            width: 200
+            height: 200
+            source: "qrc:/images/reserve.png"
+        }
+
         RadarLine {
             id: radarLine
             x: 100
             y: 100
             width: 200
             height: 200
-            src: "qrc:/images/texture.png"
+            src: "qrc:/images/reserve.png"
         }
 
-        Image {
-            id: im
-            x: 250
-            y: 250
-            width: 200
-            height: 200
-            source: "qrc:/images/texture.png"
-        }
+
     }
 }

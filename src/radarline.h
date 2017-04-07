@@ -15,7 +15,6 @@ public:
 
     void setSrc(const QString &src);
     QString src() const { return m_src; }
-
 signals:
     void srcChanged(QString);
 
