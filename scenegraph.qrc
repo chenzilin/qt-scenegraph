@@ -1,8 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>qml/main.qml</file>
-        <file>images/texture.png</file>
         <file>images/reserve.png</file>
-        <file>images/outside.png</file>
     </qresource>
 </RCC>

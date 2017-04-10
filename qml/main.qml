@@ -30,7 +30,5 @@ Window {
             height: 200
             src: "qrc:/images/reserve.png"
         }
-
-
     }
 }
